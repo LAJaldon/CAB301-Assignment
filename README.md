@@ -1,8 +1,9 @@
-This is a community library software application
+## **CAB301 Assignment – Community Library Software Application**
 
 To run in IntelliJ, simply run 'Main'
 
-Staff username is staff,
+Staff username is staff
+
 Staff password is today123
 
 Movies can be added and members can be registered using staff menu.
