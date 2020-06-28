@@ -1,3 +1,5 @@
+This is a community library software application
+
 To run in IntelliJ, simply run 'Main'
 
 Staff username is staff

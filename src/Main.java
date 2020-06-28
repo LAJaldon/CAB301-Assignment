@@ -70,19 +70,25 @@ public class Main {
         System.out.println("Please make a selection (1-2, or 0 to exit): ");
 
         Scanner input = new Scanner(System.in);
-        int num = input.nextInt();
-        switch(num){
-            case 0:
-                System.exit(0);
-                break;
-            case 1:
-                staffLoginProcess();
-                staffMenu();
-                break;
-            case 2:
-                memberLoginProcess();
-                memberMenu();
-                break;
+        if(input.hasNextInt()) {
+            int num = input.nextInt();
+            switch (num) {
+                case 0:
+                    System.exit(0);
+                    break;
+                case 1:
+                    staffLoginProcess();
+                    staffMenu();
+                    break;
+                case 2:
+                    memberLoginProcess();
+                    memberMenu();
+                    break;
+            }
+        }
+        else {
+            System.out.println("Incorrect input, must type number");
+            mainMenu();
         }
     }
 
@@ -119,62 +125,66 @@ public class Main {
         System.out.println("Please make a selection (1-4, or 0 to return to main menu): ");
 
         Scanner input = new Scanner(System.in);
-        int num = input.nextInt();
-        switch (num) {
-            case 0:
-                mainMenu();
-                break;
-            case 1:
-                MovieCollection.addMovie();
-                staffMenu();
-                break;
-            case 2:
-                Scanner deleteInput = new Scanner(System.in);
-                System.out.println("Enter the Movie title: ");
-                String movieDelete = deleteInput.nextLine();
-                MovieArray.deleteMovie(movieDelete);
-                MovieCollection.delete(new Movie(movieDelete));
-                for (int i =0; i<= MemberCollection.noOfMembers; i++){
-                    if(MemberCollection.members[i] != null) {
-                        MemberCollection.members[i].deleteBorrowedMovie(movieDelete);
+        if (input.hasNextInt()) {
+            int num = input.nextInt();
+            switch (num) {
+                case 0:
+                    mainMenu();
+                    break;
+                case 1:
+                    MovieCollection.addMovie();
+                    staffMenu();
+                    break;
+                case 2:
+                    Scanner deleteInput = new Scanner(System.in);
+                    System.out.println("Enter the Movie title: ");
+                    String movieDelete = deleteInput.nextLine();
+                    MovieArray.deleteMovie(movieDelete);
+                    MovieCollection.delete(new Movie(movieDelete));
+                    for (int i = 0; i <= MemberCollection.noOfMembers; i++) {
+                        if (MemberCollection.members[i] != null) {
+                            MemberCollection.members[i].deleteBorrowedMovie(movieDelete);
+                        }
                     }
-                }
-                System.out.println(movieDelete + " has been deleted");
-                staffMenu();
-            case 3:
-                Scanner userInput = new Scanner(System.in);
-                System.out.println("Enter member's first name: ");
-                String firstName = userInput.nextLine();
-                System.out.println("Enter member's last name:");
-                String lastName = userInput.nextLine();
-                if(!MemberCollection.checkIfDuplicate(firstName,lastName)) {
-                    System.out.println("Enter member's address: ");
-                    String address = userInput.nextLine();
-                    System.out.println("Enter member's phone number:");
-                    String phoneNumber = userInput.nextLine();
-                    int password = setPassword();
-                    MemberCollection.registerMember(firstName, lastName, address, phoneNumber, password);
-                }
-                else {
-                    System.out.println(firstName + " " + lastName + " has already registered.\n");
-                }
-                staffMenu();
-                break;
-            case 4:
-                Scanner newUserInput = new Scanner(System.in);
-                System.out.println("Enter member's first name: ");
-                String newFirstName = newUserInput.nextLine();
-                System.out.println("Enter member's last name:");
-                String newLastName = newUserInput.nextLine();
-               if (MemberCollection.checkIfDuplicate(newFirstName,newLastName)) {
-                   MemberCollection.grabPhoneNumber(newFirstName, newLastName);
-                   staffMenu();
-               }
-               else {
-                   System.out.println(newFirstName + " "+ newLastName + " is not a member\n");
-                   staffMenu();
-               }
+                    System.out.println(movieDelete + " has been deleted");
+                    staffMenu();
+                case 3:
+                    Scanner userInput = new Scanner(System.in);
+                    System.out.println("Enter member's first name: ");
+                    String firstName = userInput.nextLine();
+                    System.out.println("Enter member's last name:");
+                    String lastName = userInput.nextLine();
+                    if (!MemberCollection.checkIfDuplicate(firstName, lastName)) {
+                        System.out.println("Enter member's address: ");
+                        String address = userInput.nextLine();
+                        System.out.println("Enter member's phone number:");
+                        String phoneNumber = userInput.nextLine();
+                        int password = setPassword();
+                        MemberCollection.registerMember(firstName, lastName, address, phoneNumber, password);
+                    } else {
+                        System.out.println(firstName + " " + lastName + " has already registered.\n");
+                    }
+                    staffMenu();
+                    break;
+                case 4:
+                    Scanner newUserInput = new Scanner(System.in);
+                    System.out.println("Enter member's first name: ");
+                    String newFirstName = newUserInput.nextLine();
+                    System.out.println("Enter member's last name:");
+                    String newLastName = newUserInput.nextLine();
+                    if (MemberCollection.checkIfDuplicate(newFirstName, newLastName)) {
+                        MemberCollection.grabPhoneNumber(newFirstName, newLastName);
+                        staffMenu();
+                    } else {
+                        System.out.println(newFirstName + " " + newLastName + " is not a member\n");
+                        staffMenu();
+                    }
 
+            }
+        }
+        else {
+            System.out.println("Incorrect input");
+            staffMenu();
         }
     }
 
@@ -230,20 +240,14 @@ public class Main {
                     memberMenu();
                     break;
                 case 5:
-                    try {
-                        MovieArray.switchNull(MovieArray.movies);
-                        MovieArray.displayTopMovies();
-                        memberMenu();
-                    }
-                    catch (Exception e){
-                        System.out.println("Something went wrong.");
-                        memberMenu();
-                    }
+                    MovieArray.switchNull(MovieArray.movies);
+                    MovieArray.displayTopMovies();
+                    memberMenu();
                     break;
             }
         }
         else {
-            System.out.println("Wrong input");
+            System.out.println("Incorrect input");
             memberMenu();
         }
     }
